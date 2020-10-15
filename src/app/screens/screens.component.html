@@ -1,0 +1,6 @@
+<ng-container *ngIf="loading">
+  <app-loading-screen></app-loading-screen>
+</ng-container>
+<ng-container *ngIf="!loading">
+  <app-weather-info-screen></app-weather-info-screen>
+</ng-container>

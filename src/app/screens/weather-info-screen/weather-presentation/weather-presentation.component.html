@@ -1,0 +1,8 @@
+<div class="card">
+  <h4 class="card-title mt-3">{{weather.dt * 1000 | date:'yyyy-MM-dd'}}</h4>
+  <div class="card-content">
+    <h6>Day: {{weather.temp.day | convertMetric: metric}} {{metric}}</h6>
+    <h6>Night: {{weather.temp.night| convertMetric: metric}} {{metric}}</h6>
+    <blockquote class="blockquote">{{weather.weather | mapWeatherDescription}}</blockquote>
+  </div>
+</div>

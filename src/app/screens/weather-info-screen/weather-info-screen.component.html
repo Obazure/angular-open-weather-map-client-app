@@ -1,0 +1,67 @@
+<div class="card text-center shadowed-card" style="background: rgba(255,255,255,0.9)">
+  <div class="card-body">
+    <h1 class="card-title">Forecast for today</h1>
+    <app-weather-presentation
+      [metric]="currentMetric"
+      [weather]="weather.daily[0]"
+    ></app-weather-presentation>
+    <div class="card-content">
+      <a
+        href="{{'https://www.google.com/maps/place/'+weather.lat+','+weather.lon}}"
+        target="_blank">
+        Open my location
+      </a>
+    </div>
+    <hr/>
+
+    <div class="card-content">
+      <p>Forecast for {{weather.daily.length}} days</p>
+      <h6>Temperature for next week ({{currentMetric}})</h6>
+      <div style="display: block;">
+        <canvas
+          baseChart
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="chartOptions"
+          [plugins]="[]"
+          [legend]="true"
+          [chartType]="'bar'">
+        </canvas>
+      </div>
+      <div class="btn-group btn-group-toggle text-center" ngbRadioGroup name="radioBasic"
+           [(ngModel)]="currentMetric" (ngModelChange)="initBarChart()">
+        <label ngbButtonLabel class="btn-light  mb-0">
+          <input ngbButton type="radio" [value]="_TEMP_METRIC_CELSIUS">{{'Celsius ' + _TEMP_METRIC_CELSIUS}}
+        </label>
+        <label ngbButtonLabel class="btn-light mb-0">
+          <input ngbButton type="radio" [value]="_TEMP_METRIC_FAHRENHEIT">{{'Fahrenheit ' + _TEMP_METRIC_FAHRENHEIT}}
+        </label>
+      </div>
+      <hr>
+      <h6>Check another days ({{currentMetric}})</h6>
+      <div class="row">
+        <div class="col-4 m-0 pl-1 pr-1" *ngFor="let card of weather.daily.slice(currentPage, currentPage + pageSize)">
+          <app-weather-presentation
+            [metric]="currentMetric"
+            [weather]="card"
+          ></app-weather-presentation>
+        </div>
+      </div>
+      <div class="btn-group btn-group-toggle navigation mt-1">
+        <button
+          [disabled]="!isPreviousPageExist()"
+          class="btn btn-primary btn-arrow"
+          (click)="previousForecast()"
+        >&laquo; Previous
+        </button>
+        <button
+          [disabled]="!isNextPageExist()"
+          class="btn btn-primary btn-arrow"
+          (click)="nextForecast()"
+        >Next &raquo;
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
